@@ -75,7 +75,9 @@ comp_score = 0
 user_score = 0
 rounds_played = 0
 
-make_statement("Welcome to the Roll It 13 Game", "#")
+game_history = []
+
+make_statement("Welcome to the Roll It 13 Game", "🍀")
 
 # ask the user if they want instructions (check they say yes / no)
 want_instructions = yes_no("Do you want to see the instructions? ")
@@ -93,7 +95,7 @@ while comp_score < game_goal and user_score < game_goal:
     rounds_played += 1
 
     # Start of round loop
-    make_statement(f"Round {rounds_played}", "+")
+    make_statement(f"Round {rounds_played}", "🎲")
     # Roll the dice for the user and note if they got a double
     initial_user = initial_points("User")
     initial_comp = initial_points("Comp")
@@ -176,7 +178,7 @@ while comp_score < game_goal and user_score < game_goal:
         user_points = user_points * 2
 
     # Output round results
-    make_statement("Round Results", "=")
+    make_statement("Round Results", "🐍")
     print(f"User Points: {user_points} | Computer Points: {comp_points}")
     print(round_feedback)
     print()
@@ -185,17 +187,29 @@ while comp_score < game_goal and user_score < game_goal:
     comp_score += comp_points
     user_score += user_points
 
+    # Generate round results and add it to the game history list
+    game_results = (f"Round {rounds_played}: User Points {user_points} | "
+                    f"Computer Points {comp_points}, {winner} wins "
+                    f"({user_score} | {comp_score})")
+
+
     # show overall scores (add this to rounds loop)
     print("*** Game Update ***")    # replace with call to statement generator
     print(f"User Score: {user_score} | Computer Score {comp_score}")
 
+    game_history.append(game_results)
 
 # end of entire game, output final results
 
-make_statement("Game Over", "!")
+make_statement("Game Over", "🏁")
 
 print()
 if user_score >comp_score:
-    print("The user won!")   # replace this with statement generator call
+    make_statement("The user won!! HUZZAH!", "🥳")  # replace this with statement generator call
 else:
-    print("The computer won!")
+    make_statement("The computer won!", "🤖")
+
+print()
+make_statement("Game History", "🕰️")
+for item in game_history:
+    print(item)
